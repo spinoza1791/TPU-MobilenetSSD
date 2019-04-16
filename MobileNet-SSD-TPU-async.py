@@ -51,7 +51,7 @@ def camThread(label, results, frameBuffer, camera_width, camera_height, vidfps, 
 
     #cam = cv2.VideoCapture(usbcamno)
     
-    cam = cv2.VideoCapture()
+    cam = cv2.VideoCapture(0)
     cam.set(cv2.CAP_PROP_FPS, vidfps)
     cam.set(cv2.CAP_PROP_FRAME_WIDTH, camera_width)
     cam.set(cv2.CAP_PROP_FRAME_HEIGHT, camera_height)
