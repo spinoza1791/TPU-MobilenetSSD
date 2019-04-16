@@ -5,6 +5,8 @@ import cv2
 import time
 from PIL import Image
 from time import sleep
+from picamera.array import PiRGBArray
+from picamera import PiCamera
 import multiprocessing as mp
 from edgetpu.detection.engine import DetectionEngine
 
@@ -47,7 +49,9 @@ def camThread(label, results, frameBuffer, camera_width, camera_height, vidfps, 
     global cam
     global window_name
 
-    cam = cv2.VideoCapture(usbcamno)
+    #cam = cv2.VideoCapture(usbcamno)
+    
+    cam = cv2.VideoCapture()
     cam.set(cv2.CAP_PROP_FPS, vidfps)
     cam.set(cv2.CAP_PROP_FRAME_WIDTH, camera_width)
     cam.set(cv2.CAP_PROP_FRAME_HEIGHT, camera_height)
@@ -74,7 +78,7 @@ def camThread(label, results, frameBuffer, camera_width, camera_height, vidfps, 
         else:
             imdraw = overlay_on_image(frames, lastresults, label, camera_width, camera_height)
 
-        cv2.imshow('USB Camera', imdraw)
+        cv2.imshow('Camera', imdraw)
 
         if cv2.waitKey(1)&0xFF == ord('q'):
             break
@@ -163,8 +167,8 @@ if __name__ == '__main__':
     usbcamno = args.usbcamno
 
     camera_width = 320
-    camera_height = 240
-    vidfps = 150
+    camera_height = 320
+    vidfps = 30
 
     try:
         mp.set_start_method('forkserver')
